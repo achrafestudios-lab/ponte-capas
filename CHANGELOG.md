@@ -2,6 +2,19 @@
 
 Cambios relevantes del proyecto por versión.
 
+## [v4.0.0] - 2026-11-23
+
+### Añadido
+- Preferencia térmica en `Configurar transporte`: friolero, normal o caluroso.
+- Consulta de historial por periodos de 7, 30 o 90 días.
+- Estadísticas en el historial: valoraciones, porcentaje de días perfectos e incidencia más frecuente.
+- El historial conserva hasta 365 registros diarios.
+
+### Cambiado
+- Si se ejecuta `Ropa diaria` varias veces el mismo día, se actualizan los datos meteorológicos sin borrar la valoración ya guardada.
+- `Ver outfit hoy` muestra la preferencia térmica y si el outfit ya fue valorado.
+- Se mantiene compatibilidad con los nombres de scripts y archivos JSON de v3.
+
 ## [v3.0.0] - 2026-11-23
 
 ### Añadido

@@ -1,6 +1,6 @@
-// ROPA DIARIA v3.0 - ejecucion sin ventanas ni preguntas
+// ROPA DIARIA v4.0 - ejecucion automatica y registro mejorado
 // Recibe coordenadas como texto "latitud|longitud" desde Atajos.
-// Mantiene compatibilidad con el perfil e historial de la version 2.
+// Conserva la compatibilidad con los datos locales de V2 y V3.
 
 const APP_NAME = "Ropa diaria";
 const PROFILE_FILE = "ropa_diaria_profile.json";
@@ -8,6 +8,7 @@ const HISTORY_FILE = "ropa_diaria_history.json";
 const CONFIG_FILE = "ropa_diaria_config.json";
 const VIEW_SCRIPT = "Ver outfit hoy";
 const RATING_SCRIPT = "Valorar outfit";
+const HISTORY_LIMIT = 365;
 
 const TARGETS = [
   { id: "morning", name: "Salida de casa", time: "07:50", minutes: 470, icon: "🌅" },
@@ -44,9 +45,13 @@ function loadProfile() {
 }
 
 function loadConfig() {
-  const saved = readJSON(configPath, {});
-  const transport = saved && saved.transport === "autobus" ? "autobus" : "coche";
-  return { transport };
+  const saved = readJSON(configPath, {}) || {};
+  const transport = saved.transport === "autobus" ? "autobus" : "coche";
+  const allowedPreferences = ["friolero", "normal", "caluroso"];
+  const thermalPreference = allowedPreferences.includes(saved.thermalPreference)
+    ? saved.thermalPreference
+    : "normal";
+  return { transport, thermalPreference };
 }
 
 function loadHistory() {
@@ -177,7 +182,9 @@ function chooseUpper(feels) {
   return { base: "Camiseta ligera y transpirable", mid: "Sin capa intermedia", outer: "Sin chaqueta; lleva una capa fina solo si refresca" };
 }
 
-function buildReport(weather, place, transport, profile) {
+function buildReport(weather, place, config, profile) {
+  const transport = config.transport;
+  const thermalPreference = config.thermalPreference || "normal";
   const h = weather.hourly;
   const d = weather.daily;
   const periods = TARGETS.map(target => {
@@ -205,7 +212,9 @@ function buildReport(weather, place, transport, profile) {
   const feelMorning = periods[0].feels ?? at(d.apparent_temperature_min, 0) ?? minTemp ?? 10;
   const feelBreak = periods[1].feels ?? feelMorning;
   const feelAfternoon = periods[2].feels ?? at(d.apparent_temperature_max, 0) ?? maxTemp ?? feelBreak;
-  const profileOffset = Number(profile.thermalBias || 0);
+  const preferenceOffsets = { friolero: 2, normal: 0, caluroso: -2 };
+  const preferenceOffset = preferenceOffsets[thermalPreference] ?? 0;
+  const profileOffset = Number(profile.thermalBias || 0) + preferenceOffset;
   const coldFeel = Math.min(feelMorning, feelBreak, feelAfternoon) - profileOffset;
   const warmFeel = Math.max(feelMorning, feelBreak, feelAfternoon) - profileOffset;
   const maxGust = maxOf(periods.map(p => p.gusts)) ?? at(d.wind_gusts_10m_max, 0) ?? 0;
@@ -263,13 +272,17 @@ function buildReport(weather, place, transport, profile) {
   if (warmFeel >= 25) advice.push("A mediodia puede sobrarte ropa: evita capas gruesas y prioriza tejidos transpirables.");
   if (transport === "autobus") advice.push("Has indicado autobus: prioriza una capa exterior comoda para esperar y caminar.");
   else advice.push("Has indicado coche: deja la capa exterior a mano para los trayectos a pie.");
+  if (thermalPreference === "friolero") advice.push("Preferencia personal: se prioriza un poco mas de abrigo.");
+  if (thermalPreference === "caluroso") advice.push("Preferencia personal: se evita abrigo innecesario.");
   if (profile.ratingsCount > 0) advice.push(`Ajuste personal aplicado a partir de ${profile.ratingsCount} valoraciones.`);
 
   return {
+    schemaVersion: 4,
     date: d.time[0],
     createdAt: new Date().toISOString(),
     place,
     transport,
+    thermalPreference,
     minTemp,
     maxTemp,
     feelsMin: coldFeel,
@@ -305,9 +318,24 @@ function buildReport(weather, place, transport, profile) {
 function saveReport(report) {
   const history = loadHistory();
   const existing = history.findIndex(item => item.date === report.date);
-  if (existing >= 0) history[existing] = report;
-  else history.push(report);
-  writeJSON(historyPath, history.slice(-90));
+  const now = new Date().toISOString();
+
+  if (existing >= 0) {
+    const previous = history[existing];
+    // Una nueva ejecucion el mismo dia actualiza el tiempo, pero no borra la valoracion.
+    history[existing] = {
+      ...report,
+      createdAt: previous.createdAt || report.createdAt,
+      updatedAt: now,
+      feedback: previous.feedback || report.feedback || null,
+      feedbackAt: previous.feedbackAt || report.feedbackAt || null
+    };
+  } else {
+    history.push({ ...report, updatedAt: now });
+  }
+
+  history.sort((a, b) => String(a.date).localeCompare(String(b.date)));
+  writeJSON(historyPath, history.slice(-HISTORY_LIMIT));
 }
 
 async function scheduleNotification(title, subtitle, body, openURL, date, threadIdentifier = "ropa-diaria") {
@@ -375,7 +403,7 @@ try {
   const config = loadConfig();
   const profile = loadProfile();
   const weather = await getWeather(latitude, longitude);
-  const report = buildReport(weather, "Ubicacion GPS", config.transport, profile);
+  const report = buildReport(weather, "Ubicacion GPS", config, profile);
   saveReport(report);
   await sendReportNotification(report);
   await scheduleRatingReminder();

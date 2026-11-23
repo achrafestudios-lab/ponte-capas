@@ -1,5 +1,5 @@
 // ============================================================
-// VALORAR OUTFIT - Scriptable
+// VALORAR OUTFIT - Scriptable V4
 // Ejecutar preferiblemente al final del dia (por ejemplo 20:30).
 // Aprende de tu valoracion y ajusta las proximas recomendaciones.
 // ============================================================
@@ -61,12 +61,14 @@ try {
         profile.windBias = Math.max(0, profile.windBias - 1);
         profile.rainSensitivity = Math.max(0, profile.rainSensitivity - 1);
       }
-      profile.ratingsCount += 1;
+      profile.ratingsCount = Number(profile.ratingsCount || 0) + 1;
       profile.lastUpdated = new Date().toISOString();
       today.feedback = feedback;
       today.feedbackAt = new Date().toISOString();
+      today.schemaVersion = 4;
+      history.sort((a, b) => String(a.date).localeCompare(String(b.date)));
       writeJSON(profilePath, profile);
-      writeJSON(historyPath, history.slice(-90));
+      writeJSON(historyPath, history.slice(-365));
 
       const done = new Alert();
       done.title = "Valoración guardada";

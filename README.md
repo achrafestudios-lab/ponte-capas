@@ -7,20 +7,21 @@ Usa **Atajos** + **Scriptable** y consulta [Open-Meteo](https://open-meteo.com/)
 ## Qué hace
 
 - Calcula un outfit por capas según temperatura, sensación térmica, viento, lluvia, humedad y UV.
-- Adapta la recomendación a tu transporte: **coche** o **autobús**.
+- Adapta la recomendación a tu transporte (**coche** o **autobús**) y a tu preferencia térmica (**friolero**, **normal** o **caluroso**).
 - Envía una notificación diaria con el resumen del outfit.
 - Al tocar la notificación, abre una ficha visual con el detalle.
 - Guarda historial y valoraciones en local para ajustar futuras recomendaciones.
+- Permite consultar historial y estadísticas de 7, 30 o 90 días.
 
 ## Scripts
 
 | Script en Scriptable | Función |
 |---|---|
-| `Ropa diaria` | Motor principal: consulta el tiempo, guarda el outfit y programa notificaciones. |
-| `Configurar transporte` | Guarda si vas en coche o autobús. |
+| `Ropa diaria` | Genera la recomendación diaria y programa notificaciones. |
+| `Configurar transporte` | Guarda transporte y preferencia térmica. |
 | `Ver outfit hoy` | Muestra la ficha visual del día. |
 | `Valorar outfit` | Registra frío, calor, viento, lluvia o perfecto. |
-| `Historial ropa` | Muestra recomendaciones anteriores. |
+| `Historial ropa` | Muestra historial y estadísticas por periodo. |
 
 > Los nombres deben ser **exactos**, porque las notificaciones abren los scripts por nombre.
 
@@ -35,7 +36,7 @@ Usa **Atajos** + **Scriptable** y consulta [Open-Meteo](https://open-meteo.com/)
 
 ### 2. Instalar los scripts en Scriptable
 
-1. Descarga o copia los archivos `.js` del proyecto.
+1. Copia los archivos `.js` del proyecto.
 2. En Scriptable, crea/actualiza estos scripts con el nombre exacto:
    - `Ropa diaria` ← `ropa_diaria.js`
    - `Configurar transporte` ← `configurar_transporte.js`
@@ -44,12 +45,13 @@ Usa **Atajos** + **Scriptable** y consulta [Open-Meteo](https://open-meteo.com/)
    - `Historial ropa` ← `historial_ropa.js`
 3. Comprueba que los 5 scripts aparecen en Scriptable.
 
-### 3. Configurar el transporte
+### 3. Configurar preferencias
 
 1. Abre Scriptable con el iPhone desbloqueado.
 2. Ejecuta **Configurar transporte**.
 3. Elige **Coche** o **Autobús**.
-4. La opción queda guardada hasta que la cambies. No se preguntará en la automatización diaria.
+4. Elige tu preferencia térmica: **friolero**, **normal** o **caluroso**.
+5. La configuración queda guardada hasta que la cambies.
 
 ### 4. Crear la automatización de las 07:30 en Atajos
 
@@ -64,7 +66,7 @@ Usa **Atajos** + **Scriptable** y consulta [Open-Meteo](https://open-meteo.com/)
 | 1 | **Obtener ubicación actual** | No escribas una ciudad fija. |
 | 2 | **Obtener detalles de ubicaciones** | Entrada: ubicación actual. Detalle: **Latitud**. |
 | 3 | **Obtener detalles de ubicaciones** | Entrada: la misma ubicación actual. Detalle: **Longitud**. |
-| 4 | **Texto** | Escribe: `Latitud|Longitud` usando las variables mágicas de los pasos 2 y 3. No escribas las coordenadas a mano. |
+| 4 | **Texto** | Escribe: `Latitud|Longitud` usando las variables mágicas de los pasos 2 y 3. |
 | 5 | **Scriptable → Run Script** | Script: `Ropa diaria`. Parameter: el **Texto** del paso 4. |
 
 4. En la acción **Run Script**, revisa:
@@ -72,7 +74,7 @@ Usa **Atajos** + **Scriptable** y consulta [Open-Meteo](https://open-meteo.com/)
    - **Texts / URLs / Images / Files**: vacíos.
    - **Run In App**: **desactivado**.
    - **Show When Run / Mostrar al ejecutar**: **desactivado**.
-5. En la automatización, desactiva la confirmación previa si iOS lo permite (**Confirmar antes de ejecutar** desactivado / **Ejecutar inmediatamente**).
+5. Desactiva la confirmación previa si iOS lo permite.
 6. Si aparece en Privacidad, activa **Permitir ejecución con el dispositivo bloqueado**.
 7. Guarda la automatización.
 
@@ -81,7 +83,7 @@ Usa **Atajos** + **Scriptable** y consulta [Open-Meteo](https://open-meteo.com/)
 #### Prueba A: iPhone desbloqueado
 
 1. Ejecuta la automatización manualmente con el iPhone desbloqueado.
-2. Acepta los permisos de ubicación/notificaciones si iOS los pide.
+2. Acepta los permisos si iOS los pide.
 3. Comprueba que llega la notificación con el resumen del outfit.
 4. Toca la notificación y verifica que abre **Ver outfit hoy**.
 
@@ -105,13 +107,14 @@ Usa **Atajos** + **Scriptable** y consulta [Open-Meteo](https://open-meteo.com/)
 
 - No usa servidor propio.
 - Las coordenadas se redondean a 3 decimales antes de consultar Open-Meteo.
-- El historial y el perfil se guardan localmente en Scriptable.
-- El historial no guarda la coordenada GPS exacta.
+- El historial, perfil y configuración se guardan localmente en Scriptable.
+- El historial conserva hasta 365 registros diarios.
 
 ## Versiones
 
-Versión actual en el repo: **v3.0**. Versiones anteriores en [GitHub Releases](https://github.com/achrafestudios-lab/ponte-capas/releases):
+Versión actual en el repo: **v4.0**. Versiones anteriores en [GitHub Releases](https://github.com/achrafestudios-lab/ponte-capas/releases):
 
+- [v4.0.0](https://github.com/achrafestudios-lab/ponte-capas/releases/tag/v4.0.0)
 - [v3.0.0](https://github.com/achrafestudios-lab/ponte-capas/releases/tag/v3.0.0)
 - [v2.0.0](https://github.com/achrafestudios-lab/ponte-capas/releases/tag/v2.0.0)
 - [v1.0.0](https://github.com/achrafestudios-lab/ponte-capas/releases/tag/v1.0.0)
