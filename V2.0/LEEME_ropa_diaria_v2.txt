@@ -1,0 +1,37 @@
+ROPA DIARIA v2.0 - INSTALACION
+
+ARCHIVOS
+- ropa_diaria.js: recomendación meteorológica y pantalla visual. Sustituye el script antiguo.
+- valorar_outfit.js: pregunta al final del día cómo te has encontrado y aprende de la respuesta.
+- historial_ropa.js: muestra las recomendaciones y valoraciones guardadas.
+
+1) ACTUALIZAR EL SCRIPT PRINCIPAL
+- Abre Scriptable en el iPhone.
+- Abre el script existente llamado Ropa diaria.
+- Sustituye TODO su contenido por el contenido del nuevo ropa_diaria.js.
+- Guarda y ejecútalo manualmente una vez.
+- Acepta los permisos si los solicita.
+- La automatización de las 07:30 puede seguir usando el mismo nombre de script; no hace falta crearla de nuevo.
+- En la acción Run Script de Atajos, deja Run In App ACTIVADO para que se puedan mostrar la pregunta del transporte y la pantalla visual.
+
+2) AÑADIR LA VALORACION DE LA TARDE
+- En Scriptable crea un script nuevo llamado Valorar outfit.
+- Pega el contenido de valorar_outfit.js y guarda.
+- En Atajos crea una segunda automatización personal de Hora del día, por ejemplo a las 20:30, repetición Cada día.
+- Añade la acción Scriptable > Run Script y selecciona Valorar outfit.
+- Activa Run In App.
+- La valoración se puede cancelar con “Ahora no”. Si no quieres una segunda automatización, puedes abrir Valorar outfit manualmente al final del día.
+
+3) AÑADIR EL VISOR DEL HISTORIAL
+- En Scriptable crea un tercer script llamado Historial ropa.
+- Pega el contenido de historial_ropa.js y guarda.
+- Ejecútalo manualmente cuando quieras consultar tus outfits anteriores.
+
+DATOS Y PRIVACIDAD
+- El historial y el perfil se guardan en archivos JSON dentro del directorio de documentos local de Scriptable.
+- Se conservan hasta 90 registros diarios.
+- La ubicación se obtiene en el momento de ejecución; las coordenadas se redondean a tres decimales antes de consultar Open-Meteo.
+- La recomendación depende de la previsión disponible y es orientativa.
+
+IMPORTANTE
+La automatización de la mañana pide elegir coche o autobús y abre una pantalla visual. Por eso la acción debe usar Run In App; iOS puede requerir desbloquear el iPhone para completar interacciones. La valoración de la tarde también necesita que el iPhone pueda mostrar la pregunta.
