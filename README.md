@@ -7,23 +7,25 @@ Usa **Atajos** + **Scriptable** y consulta [Open-Meteo](https://open-meteo.com/)
 ## Qué hace
 
 - Calcula un outfit por capas según temperatura, sensación térmica, viento, lluvia, humedad y UV.
-- Adapta la recomendación a tu transporte (**coche** o **autobús**) y a tu preferencia térmica (**friolero**, **normal** o **caluroso**).
-- Envía una notificación diaria con el resumen del outfit.
-- Al tocar la notificación, abre una ficha visual con el detalle.
-- Guarda historial y valoraciones en local para ajustar futuras recomendaciones.
-- Permite consultar historial y estadísticas de 7, 30 o 90 días.
+- Adapta la recomendación a tu transporte, preferencia térmica, estilo y avisos oficiales de AEMET.
+- Permite crear un armario con fotos y análisis de prendas con IA (Groq; Gemini como respaldo opcional).
+- Guarda outfits favoritos, historial y valoraciones en local para ajustar futuras recomendaciones.
+- Incluye diagnóstico de datos locales y caché meteorológica de respaldo.
 
 ## Scripts
 
-| Script en Scriptable | Función |
-|---|---|
-| `Ropa diaria` | Genera la recomendación diaria y programa notificaciones. |
-| `Configurar transporte` | Guarda transporte y preferencia térmica. |
-| `Ver outfit hoy` | Muestra la ficha visual del día. |
-| `Valorar outfit` | Registra frío, calor, viento, lluvia o perfecto. |
-| `Historial ropa` | Muestra historial y estadísticas por periodo. |
+| Script en Scriptable | Archivo | Función |
+|---|---|---|
+| `Ropa diaria` | `ropa_diaria.js` | Genera la recomendación diaria, consulta meteo/avisos y programa notificaciones. |
+| `Mi armario` | `mi_armario.js` | Gestiona prendas con fotos, análisis IA, filtros y búsqueda. |
+| `Configurar transporte` | `configurar_transporte.js` | Guarda transporte, sensibilidad térmica, estilo, hora de valoración y comunidad AEMET. |
+| `Ver outfit hoy` | `ver_outfit_hoy.js` | Muestra la ficha visual del día y acceso a favoritos. |
+| `Valorar outfit` | `valorar_outfit.js` | Registra frío, calor, viento, lluvia o perfecto. |
+| `Historial ropa` | `historial_ropa.js` | Muestra historial y estadísticas por 7, 30 o 90 días. |
+| `Diagnostico Ropa diaria` | `diagnostico_ropa_diaria.js` | Revisa archivos, datos, fotos y estado de configuración. Solo lectura. |
+| `Mis outfits favoritos` | `Mis outfits favoritos.js` | Guarda, consulta, aplica y elimina outfits favoritos. |
 
-> Los nombres deben ser **exactos**, porque las notificaciones abren los scripts por nombre.
+> Los nombres deben ser **exactos**, porque las notificaciones y enlaces abren los scripts por nombre.
 
 ## Instalación paso a paso
 
@@ -39,19 +41,21 @@ Usa **Atajos** + **Scriptable** y consulta [Open-Meteo](https://open-meteo.com/)
 1. Copia los archivos `.js` del proyecto.
 2. En Scriptable, crea/actualiza estos scripts con el nombre exacto:
    - `Ropa diaria` ← `ropa_diaria.js`
+   - `Mi armario` ← `mi_armario.js`
    - `Configurar transporte` ← `configurar_transporte.js`
    - `Ver outfit hoy` ← `ver_outfit_hoy.js`
    - `Valorar outfit` ← `valorar_outfit.js`
    - `Historial ropa` ← `historial_ropa.js`
-3. Comprueba que los 5 scripts aparecen en Scriptable.
+   - `Diagnostico Ropa diaria` ← `diagnostico_ropa_diaria.js`
+   - `Mis outfits favoritos` ← `Mis outfits favoritos.js`
+3. Comprueba que los 8 scripts aparecen en Scriptable.
 
 ### 3. Configurar preferencias
 
 1. Abre Scriptable con el iPhone desbloqueado.
 2. Ejecuta **Configurar transporte**.
-3. Elige **Coche** o **Autobús**.
-4. Elige tu preferencia térmica: **friolero**, **normal** o **caluroso**.
-5. La configuración queda guardada hasta que la cambies.
+3. Elige transporte, sensibilidad térmica, estilo, hora de valoración y comunidad AEMET.
+4. Opcional: abre **Mi armario** para añadir prendas. Las claves API (Groq/Gemini/remove.bg) se guardan en el Keychain de Scriptable si las configuras.
 
 ### 4. Crear la automatización de las 07:30 en Atajos
 
@@ -100,20 +104,23 @@ Usa **Atajos** + **Scriptable** y consulta [Open-Meteo](https://open-meteo.com/)
 
 - **07:30**: Atajos ejecuta `Ropa diaria` y recibes la notificación.
 - **Al tocar la notificación**: se abre `Ver outfit hoy`.
-- **20:30**: el script programa un recordatorio para valorar el outfit. No necesitas otra automatización.
-- **Cuando quieras**: usa `Configurar transporte` o `Historial ropa`.
+- **Recordatorio**: `Valorar outfit` se programa a la hora configurada.
+- **Cuando quieras**: usa `Mi armario`, `Mis outfits favoritos`, `Historial ropa` o `Diagnostico Ropa diaria`.
 
 ## Privacidad
 
 - No usa servidor propio.
 - Las coordenadas se redondean a 3 decimales antes de consultar Open-Meteo.
-- El historial, perfil y configuración se guardan localmente en Scriptable.
+- Los avisos AEMET se consultan según la comunidad configurada.
+- El historial, perfil, armario, favoritos y configuración se guardan localmente en Scriptable.
+- Las claves API opcionales se guardan en el Keychain de Scriptable.
 - El historial conserva hasta 365 registros diarios.
 
 ## Versiones
 
-Versión actual en el repo: **v4.0**. Versiones anteriores en [GitHub Releases](https://github.com/achrafestudios-lab/ponte-capas/releases):
+Versión actual en el repo: **v5.3.0**. Versiones anteriores en [GitHub Releases](https://github.com/achrafestudios-lab/ponte-capas/releases):
 
+- [v5.3.0](https://github.com/achrafestudios-lab/ponte-capas/releases/tag/v5.3.0)
 - [v4.0.0](https://github.com/achrafestudios-lab/ponte-capas/releases/tag/v4.0.0)
 - [v3.0.0](https://github.com/achrafestudios-lab/ponte-capas/releases/tag/v3.0.0)
 - [v2.0.0](https://github.com/achrafestudios-lab/ponte-capas/releases/tag/v2.0.0)

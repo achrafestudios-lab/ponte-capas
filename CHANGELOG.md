@@ -2,6 +2,30 @@
 
 Cambios relevantes del proyecto por versión.
 
+## [v5.3.0] - 2026-11-25
+
+### Añadido
+- Mejora en `Mi armario`: galería con agrupación por categorías, filtros y búsqueda.
+
+### Cambiado
+- Actualización de versión de los scripts a V5.3.0 (base V5.2).
+- README actualizado para reflejar los 8 scripts y las funciones de la serie v5.
+
+## [v5.2.0] - 2026-11-25
+
+### Añadido
+- `Mi armario`: armario digital con fotos y análisis de prendas con IA (Groq, Gemini como respaldo opcional, remove.bg opcional).
+- `Mis outfits favoritos`: guardar, consultar, aplicar y eliminar outfits favoritos.
+- `Diagnostico Ropa diaria`: comprobación de archivos, datos, fotos y estado de configuración.
+- Avisos oficiales de AEMET por comunidad configurada.
+- Caché meteorológica de respaldo y reintentos de consulta.
+- Configuración de estilo, hora de valoración y comunidad AEMET.
+- Escrituras transaccionales y copias de seguridad locales para datos JSON.
+
+### Cambiado
+- El motor de recomendaciones integra armario, favoritos, avisos y preferencias ampliadas.
+- Se mantiene compatibilidad con los datos locales de versiones anteriores.
+
 ## [v4.0.0] - 2026-11-23
 
 ### Añadido
