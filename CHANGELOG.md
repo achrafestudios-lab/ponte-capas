@@ -26,6 +26,32 @@ Cambios relevantes del proyecto por versión.
 - El motor de recomendaciones integra armario, favoritos, avisos y preferencias ampliadas.
 - Se mantiene compatibilidad con los datos locales de versiones anteriores.
 
+## [v5.1.0] - 2026-11-25
+
+### Añadido
+- Estilo personal y preferencias visuales en la recomendación.
+- Alternativa de outfit desde `Ver outfit hoy` cuando hay prendas compatibles.
+- Transporte andando y hora de valoración configurable.
+- Valoración de outfits pendientes de los últimos 30 días.
+- Avisos oficiales de AEMET por comunidad, con verificación de mensajes CAP.
+- Recorte opcional de fondo en fotos de prendas con remove.bg.
+
+### Cambiado
+- `Configurar transporte` amplía opciones de personalización.
+- El motor considera estilo, avisos y preferencias aprendidas.
+
+## [v5.0.0] - 2026-11-25
+
+### Añadido
+- `Mi armario`: armario digital con fotos de prendas.
+- Identificación de prendas con Gemini al registrar el armario.
+- Selección diaria de outfit usando prendas registradas y condiciones meteorológicas.
+- Visualización de prendas seleccionadas en `Ver outfit hoy`.
+
+### Cambiado
+- La recomendación diaria pasa a combinar meteorología con prendas disponibles en el armario.
+- Se mantiene compatibilidad con el flujo y datos de v4.
+
 ## [v4.0.0] - 2026-11-23
 
 ### Añadido

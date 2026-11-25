@@ -121,6 +121,9 @@ Usa **Atajos** + **Scriptable** y consulta [Open-Meteo](https://open-meteo.com/)
 Versión actual en el repo: **v5.3.0**. Versiones anteriores en [GitHub Releases](https://github.com/achrafestudios-lab/ponte-capas/releases):
 
 - [v5.3.0](https://github.com/achrafestudios-lab/ponte-capas/releases/tag/v5.3.0)
+- [v5.2.0](https://github.com/achrafestudios-lab/ponte-capas/releases/tag/v5.2.0)
+- [v5.1.0](https://github.com/achrafestudios-lab/ponte-capas/releases/tag/v5.1.0)
+- [v5.0.0](https://github.com/achrafestudios-lab/ponte-capas/releases/tag/v5.0.0)
 - [v4.0.0](https://github.com/achrafestudios-lab/ponte-capas/releases/tag/v4.0.0)
 - [v3.0.0](https://github.com/achrafestudios-lab/ponte-capas/releases/tag/v3.0.0)
 - [v2.0.0](https://github.com/achrafestudios-lab/ponte-capas/releases/tag/v2.0.0)
